@@ -1,0 +1,9 @@
+Oct 15 16:22:40 symfony [info] {sfPatternRouting} Match route "homepage" (/) for / with parameters array (  'module' => 'job',  'action' => 'index',)
+Oct 15 16:22:41 symfony [info] {sfPatternRouting} Match route "category" (/category/:slug) for /category/index with parameters array (  'module' => 'category',  'action' => 'show',  'slug' => 'index',)
+Oct 15 16:22:41 symfony [info] {sfFilterChain} Executing filter "sfFakeRenderingFilter"
+Oct 15 16:22:41 symfony [info] {sfFilterChain} Executing filter "sfExecutionFilter"
+Oct 15 16:22:41 symfony [info] {categoryActions} Call "categoryActions->executeShow()"
+Oct 15 16:22:41 symfony [info] {Doctrine_Connection_Mysql} exec : SET NAMES 'UTF8' - ()
+Oct 15 16:22:41 symfony [info] {Doctrine_Connection_Mysql} exec : SET NAMES 'UTF8' - ()
+Oct 15 16:22:41 symfony [info] {Doctrine_Connection_Statement} execute : SELECT j.id AS j__id, j.name AS j__name, j.created_at AS j__created_at, j.updated_at AS j__updated_at, j.slug AS j__slug FROM jobeet_category j WHERE (j.slug = ?) - (index)
+Oct 15 16:22:41 symfony [err] {sfError404Exception} Unable to find the JobeetCategory object with the following parameters "array (  'slug' => 'index',)").
