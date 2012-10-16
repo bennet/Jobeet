@@ -12,4 +12,12 @@
  */
 class JobeetCategoryAffiliate extends BaseJobeetCategoryAffiliate
 {
+  public function save(Doctrine_Connection $conn = null)
+  {
+    if (!$this->getToken())
+    {
+      $this->setToken(sha1($this->getEmail().rand(11111, 99999)));
+    }
+    return parent::save($conn);
+  }
 }
