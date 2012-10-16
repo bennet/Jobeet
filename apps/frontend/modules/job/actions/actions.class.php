@@ -88,7 +88,7 @@ class jobActions extends sfActions
     
     public function executeExtend(sfWebRequest $request)
     {
-//      $request->checkCSRFProtection();
+      $request->checkCSRFProtection();
 
       $job = $this->getRoute()->getObject();
       $this->forward404Unless($job->extend());
