@@ -19,7 +19,7 @@
   <?php if ($job->getLogo()): ?>
     <div class="logo">
       <a href="<?php echo $job->getUrl() ?>">
-        <img src="/uploads/jobs/<?php echo $job->getLogo() ?>" alt="<?php echo $job->getCompany() ?> logo" />
+          <img style="max-width: 100px;" src="/uploads/jobs/<?php echo $job->getLogo() ?>" alt="<?php echo $job->getCompany() ?> logo" />
       </a>
     </div>
   <?php endif ?>

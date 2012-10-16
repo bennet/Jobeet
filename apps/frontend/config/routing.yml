@@ -7,6 +7,12 @@ category:
   param:    { module: category, action: show }
   options:  { model: JobeetCategory, type: object }
 
+job_extend:
+  url: /job/extend
+  class: sfDoctrineRoute
+  param: {module: job, action: extend}
+  options: {model: JobeetJob, type: object}
+
 job:
   class:   sfDoctrineRouteCollection
   options:
@@ -15,6 +21,7 @@ job:
     object_actions: { publish: put }
   requirements:
     token: \w+
+
 
 job_show_user:
   url: /job/:company_slug/:location_slug/:id/:position_slug
