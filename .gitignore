@@ -2,3 +2,5 @@ config/databases.yml
 log/*
 cache/*
 web/uploads/*
+data/job.dev.index/*
+data/job.test.index/*
