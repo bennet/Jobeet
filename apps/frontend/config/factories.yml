@@ -34,6 +34,14 @@ all:
     param:
       generate_shortest_url:            true
       extra_parameters_as_query_string: true
+  storage:
+    class: sfSessionStorage
+    param:
+      session_name: jobeet
+  user:
+    class: myUser
+    param:
+      timeout: 1800
 
   view_cache_manager:
     class: sfViewCacheManager
