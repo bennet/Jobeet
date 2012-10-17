@@ -31,12 +31,12 @@
                         <div class="search">
                             <h2>Ask for a job</h2>
                             <form action="<?php echo url_for('job_search') ?>" method="get">
-                              <input type="text" name="query" value="<?php echo $sf_request->getParameter('query') ?>" id="search_keywords" />
-                              <input type="submit" value="search" />
-                              <img id="loader" src="/images/loader.gif" style="vertical-align: middle; display: none" />
-                              <div class="help">
-                                Enter some keywords (city, country, position, ...)
-                              </div>
+                                <input type="text" name="query" value="<?php echo $sf_request->getParameter('query') ?>" id="search_keywords" />
+                                <input type="submit" value="search" />
+                                <img id="loader" src="/images/loader.gif" style="vertical-align: middle; display: none" />
+                                <div class="help">
+                                    Enter some keywords (city, country, position, ...)
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -56,14 +56,14 @@
                     </div>
                 <?php endif ?>
                 <div id="job_history">
-                  Recent viewed jobs:
-                  <ul>
-                    <?php foreach ($sf_user->getJobHistory() as $job): ?>
-                      <li>
-                        <?php echo link_to($job->getPosition().' - '.$job->getCompany(), 'job_show_user', $job) ?>
-                      </li>
-                    <?php endforeach ?>
-                  </ul>
+                    Recent viewed jobs:
+                    <ul>
+                        <?php foreach ($sf_user->getJobHistory() as $job): ?>
+                            <li>
+                                <?php echo link_to($job->getPosition() . ' - ' . $job->getCompany(), 'job_show_user', $job) ?>
+                            </li>
+                        <?php endforeach ?>
+                    </ul>
                 </div>
 
                 <div class="content">
@@ -76,15 +76,23 @@
                     <span class="symfony">
                         <img src="/images/jobeet-mini.png" />
                         powered by <a href="http://www.symfony-project.org/">
-                            <img src="/images/symfony.gif" alt="symfony framework" />
-                        </a>
+                            <img src="/images/symfony.gif" alt="symfony framework" /></a>
                     </span>
                     <ul>
-                        <li><a href="">About Jobeet</a></li>
-                        <li class="feed"><a href="<?php echo url_for('job', array('sf_format' => 'atom')) ?>">Full feed</a></li>
-                        <li><a href="">Jobeet API</a></li>
-                        <li class="last"><a href="<?php echo url_for('affiliate_new') ?>">Become an affiliate</a></li>
+                        <li>
+                            <a href=""><?php echo __('About Jobeet') ?></a>
+                        </li>
+                        <li class="feed">
+                            <?php echo link_to(__('Full feed'), 'job', array('sf_format' => 'atom')) ?>
+                        </li>
+                        <li>
+                            <a href=""><?php echo __('Jobeet API') ?></a>
+                        </li>
+                        <li class="last">
+                            <?php echo link_to(__('Become an affiliate'), 'affiliate_new') ?>
+                        </li>
                     </ul>
+                    <?php include_component('language', 'language') ?>
                 </div>
             </div>
         </div>

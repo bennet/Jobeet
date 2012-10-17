@@ -2,33 +2,43 @@
 
 class myUser extends sfBasicSecurityUser
 {
-  public function resetJobHistory()
-  {
-    $this->getAttributeHolder()->remove('job_history');
-  }
+    
+    public function isFirstRequest($boolean = null)
+    {
+        if (is_null($boolean))
+        {
+        return $this->getAttribute('first_request', true);
+        }
 
-  public function getJobHistory()
-  {
-    $ids = $this->getAttribute('job_history', array());
+        $this->setAttribute('first_request', $boolean);
+    }
+    
+    public function resetJobHistory()
+    {
+        $this->getAttributeHolder()->remove('job_history');
+    }
+
+    public function getJobHistory()
+    {
+        $ids = $this->getAttribute('job_history', array());
  
-    if (!empty($ids))
-    {
-      return Doctrine_Core::getTable('JobeetJob')
-        ->createQuery('a')
-        ->whereIn('a.id', $ids)
-        ->execute()
-      ;
+        if (!empty($ids))
+        {
+            return Doctrine_Core::getTable('JobeetJob')
+                ->createQuery('a')
+                ->whereIn('a.id', $ids)
+                ->execute();
+        }
+        return array();
     }
-     return array();
-  }
 
-  public function addJobToHistory(JobeetJob $job)
-  {
-    $ids = $this->getAttribute('job_history', array());
-     if (!in_array($job->getId(), $ids))
+    public function addJobToHistory(JobeetJob $job)
     {
-       array_unshift($ids, $job->getId());
-       $this->setAttribute('job_history', array_slice($ids, 0, 3));
+        $ids = $this->getAttribute('job_history', array());
+        if (!in_array($job->getId(), $ids))
+        {
+            array_unshift($ids, $job->getId());
+            $this->setAttribute('job_history', array_slice($ids, 0, 3));
+        }
     }
-  }
 }

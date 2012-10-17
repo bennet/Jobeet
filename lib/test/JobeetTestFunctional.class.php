@@ -3,19 +3,22 @@ class JobeetTestFunctional extends sfTestFunctional
 {
     public function loadData()
     {
-    Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
-    return $this;
+        Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+        return $this;
     }
+    
     public function getMostRecentProgrammingJob()
     {
-        $q = Doctrine_Query::create()
+      $q = Doctrine_Query::create()
             ->select('j.*')
             ->from('JobeetJob j')
-        ->leftJoin('j.JobeetCategory c')
-        ->where('c.slug = ?', 'programming');
-        $q = Doctrine_Core::getTable('JobeetJob')->addActiveJobsQuery($q);
-        return $q->fetchOne();
+            ->leftJoin('j.JobeetCategory c')
+            ->leftJoin('c.Translation t')
+            ->where('t.slug = ?', 'programming');
+      $q = Doctrine_Core::getTable('JobeetJob')->addActiveJobsQuery($q);
+      return $q->fetchOne();
     }
+    
     public function getExpiredJob()
     {
         $q = Doctrine_Query::create()
