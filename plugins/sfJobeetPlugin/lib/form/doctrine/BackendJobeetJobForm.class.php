@@ -14,13 +14,16 @@ class BackendJobeetJobForm extends JobeetJobForm
     ),array('style'=>'max-width: 100px;'));
  
     $this->validatorSchema['logo_delete'] = new sfValidatorPass();
+    
+    $this->validatorSchema->setPostValidator(
+            new sfValidatorDoctrineUniqueSoftDeleted(array('model' => 'JobeetJob', 'column' => array('token')))
+         );
   }
 
   protected function removeFields()
   {
     unset(
-      $this['created_at'], $this['updated_at'],
-      $this['token']
+      $this['created_at'], $this['updated_at']
     );
   }
 }

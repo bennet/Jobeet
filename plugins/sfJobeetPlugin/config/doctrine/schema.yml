@@ -9,7 +9,9 @@ JobeetCategory:
     name: { type: string(255), notnull: true }
  
 JobeetJob:
-  actAs: { Timestampable: ~ }
+  actAs: 
+    Timestampable: ~
+    SoftDelete: ~
   columns:
     category_id:  { type: integer, notnull: true }
     type:         { type: string(255) }

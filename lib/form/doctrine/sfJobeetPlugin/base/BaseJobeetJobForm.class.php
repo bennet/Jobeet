@@ -7,7 +7,7 @@
  *
  * @package    jobeet
  * @subpackage form
- * @author     Your name here
+ * @author     Bennet
  * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 29553 2010-05-20 14:33:00Z Kris.Wallsmith $
  */
 abstract class BaseJobeetJobForm extends BaseFormDoctrine
@@ -32,6 +32,7 @@ abstract class BaseJobeetJobForm extends BaseFormDoctrine
       'expires_at'   => new sfWidgetFormDateTime(),
       'created_at'   => new sfWidgetFormDateTime(),
       'updated_at'   => new sfWidgetFormDateTime(),
+      'deleted_at'   => new sfWidgetFormDateTime(),
     ));
 
     $this->setValidators(array(
@@ -52,6 +53,7 @@ abstract class BaseJobeetJobForm extends BaseFormDoctrine
       'expires_at'   => new sfValidatorDateTime(),
       'created_at'   => new sfValidatorDateTime(),
       'updated_at'   => new sfValidatorDateTime(),
+      'deleted_at'   => new sfValidatorDateTime(array('required' => false)),
     ));
 
     $this->validatorSchema->setPostValidator(
@@ -65,6 +67,7 @@ abstract class BaseJobeetJobForm extends BaseFormDoctrine
     $this->setupInheritance();
 
     parent::setup();
+    
   }
 
   public function getModelName()
