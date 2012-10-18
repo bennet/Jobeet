@@ -44,4 +44,13 @@ class PluginJobeetCategoryTable extends Doctrine_Table
     {
       return $this->findOneBySlugAndCulture($slug, 'en');
     }
+    
+    public function findOneByNameAndCulture($name, $culture = 'en')
+    {
+      $q = $this->createQuery('a')
+        ->leftJoin('a.Translation t')
+        ->andWhere('t.lang = ?', $culture)
+        ->andWhere('t.name = ?', $name);
+      return $q->fetchOne();
+    }
 }

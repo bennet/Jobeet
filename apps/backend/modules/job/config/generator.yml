@@ -36,6 +36,8 @@ generator:
           _delete:    ~
         actions:
           deleteNeverActivated: { label: Delete never activated jobs }
+          importFromCsv: { label: Import From CSV }
+#          _new : ~
         table_method: retrieveBackendJobList
       filter:
         display: [category_id, company, position, description, is_activated, is_public, email, expires_at]

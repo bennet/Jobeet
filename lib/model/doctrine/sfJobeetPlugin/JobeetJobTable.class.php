@@ -16,4 +16,71 @@ class JobeetJobTable extends PluginJobeetJobTable
     {
         return Doctrine_Core::getTable('JobeetJob');
     }
+    
+    public function importCsv($files)
+    {
+        if($files['csv']['type'] != "text/csv"){
+            sfContext::getInstance()->getUser()->setFlash('error', 'Invalid file format');
+            return false;
+        }else{
+//            print_r($files['csv']);
+            $handle = fopen($files['csv']['tmp_name'],'r');
+            $rows = 0;
+            $skipped = array();
+            $existing = 0;
+            $newCategory = 0;
+            $categoryTable = Doctrine_Core::getTable('JobeetCategory');
+//            $languages = sfContext::getInstance()->getRequest()->getPreferredCulture(array('en', 'fr'));
+            while($data = fgetcsv($handle)){
+//                print_r($data);
+                $rows++;
+                if(count($data) != 14){
+                    $skipped[] = $rows;
+                }else {
+                    $category = $data[0];
+                    $categoryData = $categoryTable->findOneByNameAndCulture($category, "en");
+                    if($categoryData){
+                        $categoryId = $categoryData->getId();
+                    }else{
+                        $newCategory++;
+                        $categoryData = new JobeetCategory();
+                        $categoryData->setName($category);
+                        $categoryData->save();
+                        $categoryId = $categoryData->getId();
+                            
+//                            $translation = new JobeetCategoryTranslation();
+//                            $translation->set
+                    }
+                    $jobData = new JobeetJob();
+                    $jobData->setCategoryId($categoryId);
+                    $jobData->setType($data[1]);
+                    $jobData->setCompany ($data[2]);
+                    $jobData->setLogo($data[3]);
+                    $jobData->setUrl($data[4]);
+                    $jobData->setPosition($data[5]);
+                    $jobData->setLocation($data[6]);
+                    $jobData->setDescription($data[7]);
+                    $jobData->setHowToApply($data[8]);
+                    $jobData->setToken($data[9]);
+                    $jobData->setIsPublic($data[10]);
+                    $jobData->setIsActivated($data[11]);
+                    $jobData->setEmail($data[12]);
+//                    $jobData->setExpiresAt($data[13]);
+                    try{
+                        $jobData->save();
+                    }  catch (exception $e){
+                        $skipped[] = $rows;
+                        $existing++;
+                    }
+                }
+            }
+            $notice = "* " . ($rows - count($skipped)) . ' records inserted';
+            if($newCategory > 0)
+                $notice .= " * $newCategory categories created";
+            if($existing >0)
+                $notice .= " * $existing records skipped because token was already existing";
+            sfContext::getInstance()->getUser()->setFlash('notice', $notice);
+            return true;
+        }
+    }
 }

@@ -29,7 +29,17 @@ class jobActions extends autoJobActions
     $this->redirect('jobeet_job');
   }
 
-  
+  public function executeListImportFromCsv(sfWebRequest $request)
+  {
+      if($request->getMethod() == "POST"){
+          if(count($request->getFiles()) > 0){
+              $files = $request->getFiles();
+              if(JobeetJobTable::getInstance()->importCsv($files)){
+                  $this->redirect('jobeet_job');
+              }
+          }
+      }
+  }
   public function executeListExtend(sfWebRequest $request)
   {
     $job = $this->getRoute()->getObject();
