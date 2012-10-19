@@ -23,21 +23,29 @@ class JobeetJobTable extends PluginJobeetJobTable
             sfContext::getInstance()->getUser()->setFlash('error', 'Invalid file format');
             return false;
         }else{
-//            print_r($files['csv']);
             $handle = fopen($files['csv']['tmp_name'],'r');
             $rows = 0;
             $skipped = array();
             $existing = 0;
             $newCategory = 0;
             $categoryTable = Doctrine_Core::getTable('JobeetCategory');
-//            $languages = sfContext::getInstance()->getRequest()->getPreferredCulture(array('en', 'fr'));
+            /**
+             * read row by row
+             */
             while($data = fgetcsv($handle)){
-//                print_r($data);
                 $rows++;
+                /**
+                 * if number of columns is less than required, then skip the row
+                 */
                 if(count($data) != 14){
                     $skipped[] = $rows;
                 }else {
                     $category = $data[0];
+                    /**
+                     * check if the category is already existing.
+                     * if existing, get the category id.
+                     * else create the category
+                     */
                     $categoryData = $categoryTable->findOneByNameAndCulture($category, "en");
                     if($categoryData){
                         $categoryId = $categoryData->getId();
@@ -47,9 +55,6 @@ class JobeetJobTable extends PluginJobeetJobTable
                         $categoryData->setName($category);
                         $categoryData->save();
                         $categoryId = $categoryData->getId();
-                            
-//                            $translation = new JobeetCategoryTranslation();
-//                            $translation->set
                     }
                     $jobData = new JobeetJob();
                     $jobData->setCategoryId($categoryId);
