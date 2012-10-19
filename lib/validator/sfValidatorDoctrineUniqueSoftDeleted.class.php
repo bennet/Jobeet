@@ -55,7 +55,8 @@ class sfValidatorDoctrineUniqueSoftDeleted extends sfValidatorSchema
 
     $q = Doctrine_Query::create()
                     ->select('*')
-                    ->from($this->getOption('model') . ' a');
+                    ->from($this->getOption('model') . ' a')
+                    ->where('(a.deleted_at IS NOT NULL OR a.deleted_at IS NULL)');
     foreach ($this->getOption('column') as $column)
     {
       $colName = $table->getColumnName($column);
@@ -67,9 +68,9 @@ class sfValidatorDoctrineUniqueSoftDeleted extends sfValidatorSchema
 
       $q->addWhere('a.' . $colName . ' = ?', $values[$column]);
     }
-
+//    echo $q->getSqlQuery();exit;
     $object = $q->fetchOne();
-
+//print_r($object->toArray());exit;
     // if no object or if we're updating the object, it's ok
     if (!$object || $this->isUpdate($object, $values))
     {
