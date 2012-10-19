@@ -68,9 +68,7 @@ class sfValidatorDoctrineUniqueSoftDeleted extends sfValidatorSchema
 
       $q->addWhere('a.' . $colName . ' = ?', $values[$column]);
     }
-//    echo $q->getSqlQuery();exit;
     $object = $q->fetchOne();
-//print_r($object->toArray());exit;
     // if no object or if we're updating the object, it's ok
     if (!$object || $this->isUpdate($object, $values))
     {
