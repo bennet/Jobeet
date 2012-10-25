@@ -12,5 +12,6 @@ class JobeetJobForm extends PluginJobeetJobForm
 {
   public function configure()
   {
+      unset($this['deleted_at']);
   }
 }
